@@ -28,17 +28,11 @@ async function bootstrap() {
       queueOptions: {
         durable: true,
       },
-
+      exchange: configService.get<string>('amqp.email_exchange'),
+      routingKey: configService.get<string>('amqp.email_routing_key'),
       noAck: false,
       prefetchCount: 5,
     },
-    // Add message pattern configuration
-    socketOptions: {
-      heartbeatIntervalInSeconds: 60,
-      reconnectTimeInSeconds: 5,
-    },
-    // Add pattern matching options
-    messagePatternKeys: ['cmd'],
   });
 
   // Start microservice and HTTP server
